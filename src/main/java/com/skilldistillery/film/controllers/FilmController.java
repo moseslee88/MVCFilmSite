@@ -44,7 +44,8 @@ public class FilmController {
 		  String viewName = "WEB-INF/views/home.jsp";
 		  ModelAndView mv = new ModelAndView(viewName);
 		  List<Film> title = dao.getFilmTitleByKeyword(filmkey);
-		  mv.addObject("filmTitlekey", title);  
+		  mv.addObject("filmTitlekey", title); 
+		  mv.addObject("falsetitle", filmkey);  
 		  return mv;
 		}
 		

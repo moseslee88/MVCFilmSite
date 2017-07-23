@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
  <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,8 @@
 </form>
 
 
+<div id="titleid">
+
 <c:choose>  
   <c:when test="${filmTitle != null}">
     <h3>${filmTitle}</h3>
@@ -31,9 +34,10 @@
 <input type="submit" value="Look up Film by any keyword">
 
 
-<div id="titleid">
+
+<c:set var="list" value="${filmTitlekey }" />
 <c:choose>  
-   <c:when test="${! empty filmTitlekey }">  
+   <c:when test="${! empty filmTitlekey  }">  
   <ul>
   <c:forEach var="fil" items="${filmTitlekey }">
     <li><c:out value="${fil.title}"/></li>
@@ -45,48 +49,25 @@
     </ul>
    
   </c:when>
+ 
   <c:otherwise>
+  <c:set var="list" value="${filmTitlekey }" />
+  <c:if test='${!fn:contains(list, falsetitle)}'>
          <p> There are no results yet. Please try another keyword please. </p>
+  
+</c:if>
   </c:otherwise>
 </c:choose>
+</form>
 </div>
-</form>
 
- <form action="postTitle.do" method="post" id="title">  
-<input type="text" name="title" placeholder="Enter title you wish to add!"><br>
-<input type="text" name="description" placeholder="Describe the new film!"><br>
-<input type="number" name="releaseyear" min="1900" max="2017" placeholder="Enter release year!" style="width: 20%"><br>
-Rental Duration: <select name="rentalduration" id="slectboxid">
-<option >1</option>
-<option >2</option>
-<option >3</option>
-<option >4</option>
-<option >5</option>
-<option >6</option>
-<option >7</option>
-</select> <br>
-<!--  <input type="number" name="rentalduration" min="1" max="8" placeholder="Enter rental duration(quantity 1 to 8)!" style="width: 30%">
-<input type="text" name="filmrating" placeholder="Enter film rating dropd box!"> 
-<input type="text" name="filmspecialfeatures" placeholder="Enter any special features!">  -->
+<hr>
 
-<input type="text" name="rentalrate" placeholder="Enter rental rate in **.** format!!" style="width: 28%"><br>
-<input type="number" name="length" min="1" max="190" placeholder="Enter length of film" style="width: 30%"><br>
-<input type="number" name="replacementcost" min="0.00" max="100.00" placeholder="Enter replacement cost" style="width: 30%"><br>
-Rating: <select name="rating" id="title">
-<option >G</option>
-<option >PG</option>
-<option >PG13</option>
-<option >R</option>
-<option >NC17</option>
-</select><br>
-Special Features: <input type="checkbox" name="specialfeatures" VALUE="Trailers" >Trailers
-<input type="checkbox" name="specialfeatures" VALUE="Commentaries" >Commentaries
-<input type="checkbox" name="specialfeatures" VALUE="Deleted Scenes" >Deleted Scenes
-<input type="checkbox" name="specialfeatures" VALUE="Behind The Scenes" CHECKED>Behind the Scenes
-<br>
-<input type="submit" value="Add new Film by user input">   
+ <form action="JSPafterAddedFilm.jsp" id="title">  
+<input type="submit" value="Click here for NEW film you wish to add!"><br>
+</form> 
 
-</form>
+
 
 
 </body>

@@ -173,14 +173,15 @@ public class FilmDaoDbImpl implements FilmDao {
 				}
 
 	@Override
-	public void deleteFilm(Film film) {
+	public boolean deleteFilm(Film film) {
+		return false;
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void updateFilm(Film film) {
+	public boolean updateFilm(Film film) {
             Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, user, pass);
@@ -198,24 +199,28 @@ public class FilmDaoDbImpl implements FilmDao {
 			stmt.setDouble(7, film.getReplacementcost());
 			stmt.setString(8, film.getRating());
 			stmt.setString(9, film.getSpecialfeatures());
-			stmt.setInt(10, 1);
+			stmt.setInt(10, 1);   //hardcoded default language_id to 1 (English)
 			stmt.setInt(11, film.getId());
-			int updateCount = stmt.executeUpdate();
-			if (updateCount == 1) {
-				ResultSet keys = stmt.getGeneratedKeys();
-				if (keys.next()) {
-					film.setId(keys.getInt(1));
-				} else {
-					film = null;
-				}
-				System.out.println(film);
+			
+			
+		      // Replace actor's film list
+		      sql = "DELETE FROM film WHERE id = ?";
+		      stmt = conn.prepareStatement(sql);
+		      stmt.setInt(1, film.getId());
+		      int updateCount = stmt.executeUpdate();
+		      sql = "INSERT INTO film (film_id, actor_id) VALUES (?,?)";
+		      stmt = conn.prepareStatement(sql);
+		      for (Film film : actor.getFilms()) {
+		        stmt.setInt(1, film.getId());
+		        stmt.setInt(2, actor.getId());
+		        updateCount = stmt.executeUpdate();
+		      }
 
-				stmt.close();
 				conn.commit(); // COMMIT TRANSACTION --this line of code ensures this film object gets added to
 								// mySQL database
 				conn.close();
 			}
-		} catch (SQLException sqle) {
+		catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
 				try {
@@ -224,8 +229,9 @@ public class FilmDaoDbImpl implements FilmDao {
 					System.err.println("Error trying to rollback");
 				}
 			}
-			throw new RuntimeException("Error inserting film" + film);
+			return false;
 		}
+		return true;
 	}
 
 	public List<Film> getAllFilms() {
@@ -237,7 +243,7 @@ public class FilmDaoDbImpl implements FilmDao {
 
 
 
-    
+
 
 
    
