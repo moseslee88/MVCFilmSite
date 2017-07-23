@@ -2,14 +2,19 @@ package com.skilldistillery.film.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.data.Film;
 import com.skilldistillery.film.data.FilmDao;
+
 
 @Controller
 public class FilmController {
@@ -42,6 +47,41 @@ public class FilmController {
 		  mv.addObject("filmTitlekey", title);  
 		  return mv;
 		}
+		
+		
+		@RequestMapping(path = "postTitle.do", 
+				method=RequestMethod.POST)
+		public ModelAndView addFilmTitle(Film film,
+                RedirectAttributes redir, HttpSession session) {
+			dao.addFilm(film);
+			ModelAndView mv = new ModelAndView();
+			System.out.println("film: " + film);
+			redir.addFlashAttribute("filmlist", dao.getAllFilms());
+			mv.setViewName("redirect:FilmAdded.do");
+			return mv;
+		}
+		
+	
+	@RequestMapping(path="FilmAdded.do",       //here I implemented the mapping to handle post-Redirect
+            method=RequestMethod.GET)     
+public ModelAndView gotFilmandAddtoList(Film film) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("WEB-INF/views/JSPafterAddedFilm.jsp");
+		mv.addObject("filmlist", dao.getAllFilms());
+		return mv;
+}
+	
+	@RequestMapping(path = "updatepostTitle.do", 
+			method=RequestMethod.POST)
+	public ModelAndView updateFilmTitle(Film film, RedirectAttributes redir) {
+		dao.updateFilm(film);
+		String viewName = "WEB-INF/views/JSPafterAddedFilm.jsp";
+		ModelAndView mv = new ModelAndView(viewName);
+		System.out.println("film: " + film);
+		redir.addFlashAttribute("filmlist", dao.getAllFilms());
+		mv.setViewName("redirect:FilmAdded.do");
+		return mv;
+	}
 		
 
 	

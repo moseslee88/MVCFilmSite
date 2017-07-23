@@ -25,6 +25,20 @@ body {
 	color: blue;
 }
 
+#title {
+	color: black;
+	font-family: Verdana, sans-serif;
+	font-style: oblique;
+	font-size: 0.7em;
+}
+
+#deleted {
+	color: black;
+	font-family: Verdana, sans-serif;
+	font-style: oblique;
+	font-size: 0.4em;
+}
+
 
 
 .char {
