@@ -88,26 +88,39 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	
 	// deletes FILM object after clicking button
 	@RequestMapping(value = "FilmDeleted.do", method = RequestMethod.POST)
-	public ModelAndView deleteEmployee(@RequestParam(name = "filmId") int id, RedirectAttributes redir) {
+	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id) {
 		ModelAndView mv = new ModelAndView();
 		dao.deleteFilm(id);
 	    System.out.println("film id deleted: " + id);
-		redir.addFlashAttribute("filmlist", dao.getAllFilms());
-		mv.setViewName("redirect:FilmAdded.do");
+		mv.setViewName("JSPafterdelete.jsp");
+		mv.addObject("filmlist", dao.getAllFilms());
+
 		return mv;
 	}
 	
-	@RequestMapping(path = "updatepostTitle.do", 
+	// here I do the updating of film
+	@RequestMapping(path = "FilmUpdated.do", 
 			method=RequestMethod.POST)
 	public ModelAndView updateFilmTitle(Film film, RedirectAttributes redir) {
 		dao.updateFilm(film);
-		String viewName = "JSPafterAddedFilm.jsp";
-		ModelAndView mv = new ModelAndView(viewName);
+		ModelAndView mv = new ModelAndView();
 		System.out.println("film: " + film);
-		redir.addFlashAttribute("filmlist", dao.getAllFilms());
-		mv.setViewName("redirect:FilmAdded.do");
+		mv.setViewName("JSPafterdelete.jsp");
+		mv.addObject("filmlist", dao.getAllFilms());
+		mv.addObject("film", film);
 		return mv;
 	}
+	
+	// here I do the updating of film
+//	@RequestMapping(value = "FilmUpdated.do", method = RequestMethod.POST)
+//	public ModelAndView addEmployee(Employee employee, @RequestParam("address_id") int id) {
+//		ModelAndView mv = new ModelAndView();
+//		Film f = new Film();
+//		f.setTitle(title);
+//		mv.setViewName("JSPafterdelete.jsp");
+//		dao.update......;
+//		return mv;
+//	}
 		
 
 	
