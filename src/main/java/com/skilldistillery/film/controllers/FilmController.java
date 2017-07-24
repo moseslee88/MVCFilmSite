@@ -70,6 +70,7 @@ public class FilmController {
 			ModelAndView mv = new ModelAndView();
 			System.out.println("film: " + film);
 			redir.addFlashAttribute("filmlist", dao.getAllFilms());
+			redir.addFlashAttribute("film", film);
 			mv.setViewName("redirect:FilmAdded.do");
 			return mv;
 		}
@@ -81,8 +82,20 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("JSPafterAddedFilm.jsp");
 		mv.addObject("filmlist", dao.getAllFilms());
+		mv.addObject("film", film);
 		return mv;
 }
+	
+	// deletes FILM object after clicking button
+	@RequestMapping(value = "FilmDeleted.do", method = RequestMethod.POST)
+	public ModelAndView deleteEmployee(@RequestParam(name = "filmId") int id, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		dao.deleteFilm(id);
+	    System.out.println("film id deleted: " + id);
+		redir.addFlashAttribute("filmlist", dao.getAllFilms());
+		mv.setViewName("redirect:FilmAdded.do");
+		return mv;
+	}
 	
 	@RequestMapping(path = "updatepostTitle.do", 
 			method=RequestMethod.POST)

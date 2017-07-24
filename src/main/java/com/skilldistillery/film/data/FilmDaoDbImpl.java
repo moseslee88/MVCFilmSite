@@ -165,7 +165,7 @@ public class FilmDaoDbImpl implements FilmDao {
 				System.out.println(film);
 
 				stmt.close();
-				 //conn.commit(); //COMMIT TRANSACTION --this line of code ensures this film object gets added to mySQL database
+				conn.commit(); //COMMIT TRANSACTION --this line of code ensures this film object gets added to mySQL database
 				conn.close();
 			  }
 		}catch (SQLException sqle) {
@@ -325,7 +325,7 @@ public class FilmDaoDbImpl implements FilmDao {
 		List<Actor> cast = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT id, title, description, release_year, rating, length, special_features FROM film ";
+			String sql = "SELECT id, title, description, release_year, rating, length, special_features FROM film LIMIT 10";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			//stmt.setString(1, "%" + key + "%");
 			ResultSet rs = stmt.executeQuery();
@@ -405,6 +405,33 @@ public class FilmDaoDbImpl implements FilmDao {
  * FROM // film_actor WHERE film_id = ?)
  * 
  * 
+ * 
+ * 
+ * 
+ *    <c:choose>  POTENTIAL TO USE in JSPafterAddedFilm
+  <c:when test="${film != null}">
+     <ul>
+
+    <li>FilmId = ${film.id}</li>
+    <li>${film.title}</li>
+    <li>${film.description}</li>
+    <li>${film.releaseyear}</li>
+    <li>${film.rentalduration}</li>
+    <li>${film.rentalrate}</li>
+    <li>${film.length}</li>
+    <li>${film.replacementcost}</li>
+    <li>${film.rating}</li>
+    <li>${film.specialfeatures}</li>
+
+    </ul>
+    <br><br>
+    
+    Film ID: <input type="hidden" name="filmId" value="${edit.filmId}">${edit.filmId}<br>
+    Film ID: <input type="text" name="filmId" value="${edit.filmId}">${edit.filmId}<br>
+
+    
+  </c:when>
+  </c:choose>
  * }
  *******/
 
