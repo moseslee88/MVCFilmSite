@@ -89,8 +89,9 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	// deletes FILM object after clicking button
 	@RequestMapping(value = "FilmDeleted.do", method = RequestMethod.POST)
 	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id) {
-		ModelAndView mv = new ModelAndView();
+		dao.getAllFilms();
 		dao.deleteFilm(id);
+		ModelAndView mv = new ModelAndView();
 	    System.out.println("film id deleted: " + id);
 		mv.setViewName("JSPafterdelete.jsp");
 		mv.addObject("filmlist", dao.getAllFilms());

@@ -98,7 +98,7 @@ Film Added:<br>
                              <input type="submit" value="UpdateFilm" class="submit"/><br><br>
                                      </form>
 						                     <form action="FilmDeleted.do" method="POST">
-						                     <input type="hidden" name="filmId">
+						                     <input type="hidden" name="filmId" value="${fil.id }">
 						                     <input type="submit" value="REMOVE Film">
 
                                       </form><br><br>
