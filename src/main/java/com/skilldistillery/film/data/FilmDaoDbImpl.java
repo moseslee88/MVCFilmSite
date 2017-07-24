@@ -17,6 +17,15 @@ public class FilmDaoDbImpl implements FilmDao {
 	private String pass = "student";
 	private List<Film> films = new ArrayList<>();
 	private Film film; 
+	
+	public FilmDaoDbImpl() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("Error loading MySQL Driver!!!");
+		}
+	}
 
 	@Override
 	public String getFilmTitleById(int id) {
@@ -41,14 +50,6 @@ public class FilmDaoDbImpl implements FilmDao {
 		return title;
 	}
 
-	public FilmDaoDbImpl() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("Error loading MySQL Driver!!!");
-		}
-	}
 
 	@Override
 	public List<Film> getFilmTitleByKeyword(String key) {
@@ -194,7 +195,9 @@ public class FilmDaoDbImpl implements FilmDao {
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             updateCount = stmt.executeUpdate();
+            stmt.close();
             conn.commit(); // COMMIT TRANSACTION
+            conn.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             if (conn != null) {
@@ -279,56 +282,67 @@ public class FilmDaoDbImpl implements FilmDao {
 	@Override
 	public boolean updateFilm(Film film) {
             Connection conn = null;
+            int id=film.getId();
+            System.out.println(film);
+            
+            //establish a connection with ELEVEN fields
 		try {
 			conn = DriverManager.getConnection(url, user, pass);
 			conn.setAutoCommit(false); // START TRANSACTION
-			String sql = "UPDATE film SET id = ?, title=?, description=?, release_year=?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ?, language_id = ? WHERE id=?";
+			String sql = "UPDATE film SET title=?, description=?, release_year=?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ?, language_id = ? WHERE id=?";
 
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, film.getId());;
-			stmt.setString(2, film.getTitle());
-			stmt.setString(3, film.getDescription());
-			stmt.setInt(4, film.getReleaseyear());
-			stmt.setInt(5, film.getRentalduration());
-			// stmt.setDouble(6, film.getRentalrate());
-			stmt.setDouble(6, 8.99);  //TEST to see if film line updates and hardcode film's rental_rate to 8.99
-			stmt.setInt(7, film.getLength());
-			stmt.setDouble(8, film.getReplacementcost());
-			stmt.setString(9, film.getRating());
-			stmt.setString(10, film.getSpecialfeatures());
-			stmt.setInt(11, 1);   //hardcoded default language_id to 1 (English)
-			stmt.setInt(12, film.getId());
-			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			//PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseyear());
+			stmt.setInt(4, film.getRentalduration());
+		    stmt.setDouble(6, film.getRentalrate()); //stmt.setDouble(5, 8.99);  TEST to see if film line updates and hardcode film's rental_rate to 8.99
+			stmt.setInt(6, film.getLength());
+			stmt.setDouble(7, film.getReplacementcost());
+			stmt.setString(8, film.getRating());
+			stmt.setString(9, film.getSpecialfeatures());
+			stmt.setInt(10, 1);   //hardcoded default language_id to 1 (English)
+			stmt.setInt(11, film.getId());	 //i edited this line to get CURRENT filmid, not HARDcode id 1026, for instance   
+			System.out.println("The film edited was: " + film.getTitle());  
             int updateCount = stmt.executeUpdate();
-            if (updateCount == 1) {
-   //here I replace film's film with updated film by id
-            	sql = "DELETE FROM film WHERE id = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, film.getId());
-                updateCount = stmt.executeUpdate();
-                sql = "INSERT INTO film (id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) "
-                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?)  WHERE id=?" ;
-                System.out.println("in updateFilm method in impl, after the sql insert statement");
-                stmt.setInt(1, film.getId());
-                stmt.setString(2, film.getTitle());
-                stmt.setString(3, film.getDescription());
-                stmt.setInt(4, film.getReleaseyear());
-                stmt.setInt(5, 1);   //hardcoded English language so 1
-                stmt.setInt(6, film.getRentalduration());
-                stmt.setDouble(7, film.getRentalrate());
-                stmt.setInt(8, film.getLength());
-                stmt.setDouble(9, film.getReplacementcost());
-                stmt.setString(10, film.getRating());
-                stmt.setString(11, film.getSpecialfeatures());
-                stmt.setInt(12, film.getId());
-                updateCount = stmt.executeUpdate();
-			
-		     
+            
+
+            
+            
+//           if (updateCount == 1) {
+//   here I replace film's film with updated film by id
+//            	sql = "DELETE FROM film WHERE id = ?";
+//                stmt = conn.prepareStatement(sql);
+//                stmt.setInt(1, film.getId());
+//                updateCount = stmt.executeUpdate();
+//                sql = "INSERT INTO film (id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) "
+//                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?)  WHERE id=?" ;
+//                System.out.println("in updateFilm method in impl, after the sql insert statement");
+//                stmt.setInt(1, film.getId());
+//                stmt.setString(2, film.getTitle());
+//                stmt.setString(3, film.getDescription());
+//                stmt.setInt(4, film.getReleaseyear());
+//                stmt.setInt(5, 1);   //hardcoded English language so 1
+//                stmt.setInt(6, film.getRentalduration());
+//                stmt.setDouble(7, film.getRentalrate());
+//                stmt.setInt(8, film.getLength());
+//                stmt.setDouble(9, film.getReplacementcost());
+//                stmt.setString(10, film.getRating());
+//                stmt.setString(11, film.getSpecialfeatures());
+//                stmt.setInt(12, film.getId());
+//                updateCount = stmt.executeUpdate();  
               
-				conn.commit(); // COMMIT TRANSACTION --this line of code ensures this film object gets added to
-								// mySQL database
-				conn.close();
+			
+                   if (updateCount == 1) {
+			
+				  conn.commit(); // COMMIT TRANSACTION --this line of code ensures this film object gets added to
 			}
+              
+								// mySQL database
+				stmt.close();
+				conn.close();
+				   
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -382,81 +396,3 @@ public class FilmDaoDbImpl implements FilmDao {
 
 
 
-/*
- * package com.skilldistillery.film.data;
- * 
- * import java.sql.Connection; import java.sql.DriverManager; import
- * java.sql.PreparedStatement; import java.sql.ResultSet; import
- * java.sql.SQLException; import java.util.ArrayList; import java.util.List;
- * 
- * public class FilmDaoDbImpl implements FilmDao { private static String url =
- * "jdbc:mysql://localhost:3306/sdvid"; private String user = "student"; private
- * String pass = "student"; private List<Film> titles=new ArrayList<>();
- * 
- * //constructor for my FilmDaoDbImpl public FilmDaoDbImpl() { try {
- * Class.forName("com.mysql.jdbc.Driver"); } catch (ClassNotFoundException e) {
- * e.printStackTrace(); System.err.println("Error loading MySQL Driver!!!"); } }
- * 
- * @Override public String getFilmTitleById(int id) { String title = null; try {
- * Connection conn = DriverManager.getConnection(url, user, pass); String sql =
- * "SELECT title FROM film WHERE id = ?"; PreparedStatement stmt =
- * conn.prepareStatement(sql); stmt.setInt(1, id); ResultSet rs =
- * stmt.executeQuery(); if (rs.next()) { //NOTICE THE IF instead of the WHILE
- * here in case id is invalid or larger than 1000 title = rs.getString(1); }
- * rs.close(); stmt.close(); conn.close(); } catch (SQLException e) {
- * e.printStackTrace(); } return title;
- * 
- * }
- * 
- * @Override public List<Film> getFilmTitleByKeyword(String key) {
- * titles.clear(); String title = null; try { Connection conn =
- * DriverManager.getConnection(url, user, pass); //String sql =
- * "SELECT title FROM film WHERE title LIKE '%" + key + "%'"; //String sql =
- * "SELECT title FROM film WHERE title LIKE ?"; String sql =
- * "SELECT id, first_name, last_name FROM actor WHERE id IN ( SELECT actor_id FROM film_actor WHERE film_id = ?)"
- * ; PreparedStatement stmt = conn.prepareStatement(sql); stmt.setString(1, "%"
- * + key +"%"); ResultSet rs = stmt.executeQuery(); int id = 1; while
- * (rs.next()) { //NOTICE THE IF instead of the WHILE here in case id is invalid
- * or larger than 1000 // title = id + ". " + rs.getString(1); //this is the way
- * to get the number before each element title = rs.getString(1);
- * titles.add(title); id++; } System.out.println(id + " results"); rs.close();
- * stmt.close(); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
- * return titles; }
- * 
- * 
- * 
- * // SELECT id, first_name, last_name FROM actor WHERE id IN ( SELECT actor_id
- * FROM // film_actor WHERE film_id = ?)
- * 
- * 
- * 
- * 
- * 
- *    <c:choose>  POTENTIAL TO USE in JSPafterAddedFilm
-  <c:when test="${film != null}">
-     <ul>
-
-    <li>FilmId = ${film.id}</li>
-    <li>${film.title}</li>
-    <li>${film.description}</li>
-    <li>${film.releaseyear}</li>
-    <li>${film.rentalduration}</li>
-    <li>${film.rentalrate}</li>
-    <li>${film.length}</li>
-    <li>${film.replacementcost}</li>
-    <li>${film.rating}</li>
-    <li>${film.specialfeatures}</li>
-
-    </ul>
-    <br><br>
-    
-    Film ID: <input type="hidden" name="filmId" value="${edit.filmId}">${edit.filmId}<br>
-    Film ID: <input type="text" name="filmId" value="${edit.filmId}">${edit.filmId}<br>
-
-    
-  </c:when>
-  </c:choose>
- * }
- *******/
-
-   

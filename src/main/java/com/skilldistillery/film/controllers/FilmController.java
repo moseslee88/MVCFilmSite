@@ -104,18 +104,21 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	// here I do the updating of film
 	@RequestMapping(path = "FilmUpdated.do", 
 			method=RequestMethod.POST)
-	public ModelAndView updateFilmTitle(@RequestParam(name = "filmId") int id, Film film) {
-		dao.updateFilm(film);
+	public ModelAndView updateFilmTitle(Film film) {
+		dao.updateFilm(film);  
+		System.out.println(film);
 		dao.getAllFilms();
+		int id=film.getId();
 		ModelAndView mv = new ModelAndView();
 		System.out.println("film: " + film);
 		mv.setViewName("JSPafterdelete.jsp");
-		mv.addObject("filmlist", dao.getAllFilms());
 		mv.addObject("film", film);
+		mv.addObject("filmId", id);
+		mv.addObject("filmlist", dao.getAllFilms());
 		return mv;
 	}
 	
-	// here I do the updating of film
+	
 //	@RequestMapping(value = "FilmUpdated.do", method = RequestMethod.POST)
 //	public ModelAndView addEmployee(Employee employee, @RequestParam("address_id") int id) {
 //		ModelAndView mv = new ModelAndView();

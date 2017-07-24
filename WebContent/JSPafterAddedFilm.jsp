@@ -67,7 +67,7 @@ Film Added:<br>
     
                        <div id="tab">
                    <form action="FilmUpdated.do" method="POST">
-                      Film ID  <input type="hidden" name="filmId" value="${fil.id}">${fil.id}<br>
+                      Film ID  <input type="hidden" name="id" value="${fil.id}">${fil.id}<br>
                          	  <input type="text" name="title" placeholder="Enter edited title here!">${fil.title}<br>
                                <input type="text" name="description" placeholder="Enter new description">${fil.description}<br>
                                <input type="number" name="releaseyear" placeholder="Enter new year OF release">${fil.releaseyear}<br>

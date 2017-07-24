@@ -31,9 +31,10 @@ public class Film {
 	}
 
 	
-	//special constructor for all 9 parameters
-	public Film(String title, String description, int releaseyear, int rentalduration, double rentalrate,
+	//special constructor for all 9 parameters PLUS id
+	public Film(int id, String title, String description, int releaseyear, int rentalduration, double rentalrate,
 			int length, double replacementcost, String rating, String specialfeatures) {
+		this.id=id;
 		this.title = title;
 		this.description = description;
 		this.releaseyear = releaseyear;

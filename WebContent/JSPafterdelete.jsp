@@ -36,7 +36,7 @@ STUFF was deleted/Updated here form database!!
     
 
 
-    <h5>The film you deleted was ... "${film}"</h5>
+    <h5>The film you updated was ... "${film}"</h5>
     
 
 
