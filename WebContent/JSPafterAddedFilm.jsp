@@ -11,8 +11,8 @@
 </head>
 <body>
 
-
-STUFF was added or updated!!
+<div id="title">
+HERE's what was added or updated!!
  <form action="postTitle.do" method="post" id="title">  
 <input type="text" name="title" placeholder="Enter title you wish to add!"><br>
 <input type="text" name="description" placeholder="Describe the new film!"><br>
@@ -45,9 +45,34 @@ Special Features: <input type="checkbox" name="specialfeatures" VALUE="Trailers"
 <input type="checkbox" name="specialfeatures" VALUE="Deleted Scenes" >Deleted Scenes
 <input type="checkbox" name="specialfeatures" VALUE="Behind The Scenes" CHECKED>Behind the Scenes
 <br>
-<input type="submit" value="Add new Film by user input">   
+<input type="submit" value="Add new Film!">   
 
 </form>
+Film Added:<br> 
+   <c:choose>
+  <c:when test="${filmlist != null}">
+   <ul>
+  <c:forEach var="fil" items="${filmlist }">
+    <li>FilmId = <c:out value="${fil.id}"/></li>
+    <li><c:out value="${fil.title}"/></li>
+    <li><c:out value="${fil.description}"/></li>
+    <li><c:out value="${fil.releaseyear}"/></li>
+    <li><c:out value="${fil.rentalduration}"/></li>
+    <li><c:out value="${fil.rentalrate}"/></li>
+    <li><c:out value="${fil.length}"/></li>
+    <li><c:out value="${fil.replacementcost}"/></li>
+    <li><c:out value="${fil.rating}"/></li>
+    <li><c:out value="${fil.specialfeatures}"/></li><br><br>
+    </c:forEach>
+    </ul>
+    
+    </c:when>
+    </c:choose>
+  
 
+
+
+
+</div>
 </body>
 </html>

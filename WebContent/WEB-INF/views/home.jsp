@@ -29,6 +29,12 @@
 
 <hr>
 
+
+
+
+
+
+
 <form action="getKeyword.do" method="get">
 <input type="text" name="filmkey">
 <input type="submit" value="Look up Film by any keyword">
@@ -40,10 +46,13 @@
    <c:when test="${! empty filmTitlekey  }">  
   <ul>
   <c:forEach var="fil" items="${filmTitlekey }">
+    <li><c:out value="${fil.id}"/></li>
     <li><c:out value="${fil.title}"/></li>
-    <li><c:out value="${fil.length}"/></li>
-    <li><c:out value="${fil.rating}"/></li>
+    <li>Year: <c:out value="${fil.releaseyear}"/></li>
+    <li><c:out value="${fil.length}"/> min. long</li>
+    <li><c:out value="${fil.rating}"/> rating</li>
     <li><c:out value="${fil.description}"/></li>
+    <li><c:out value="${fil.specialfeatures}"/></li>
     <li>Cast = <c:out value="${fil.cast}"/></li><br>
     </c:forEach>
     </ul>
@@ -59,13 +68,38 @@
   </c:otherwise>
 </c:choose>
 </form>
+
+<hr> 
+
+<form action="getFilms.do" method="get">
+<input type="submit" value="Look at all Films">
+
+
+
+<c:set var="list" value="${filmTitlelist }" />
+<c:choose>  
+   <c:when test="${! empty filmTitlelist  }">  
+  <ul>
+  <c:forEach var="fi" items="${filmTitlekey }">
+    <li><c:out value="${fi.id}"/></li>
+    <li><c:out value="${fi.title}"/></li>
+    <li>Brief Description: <c:out value="${fi.description}"/></li>
+    <li>Year: <c:out value="${fi.releaseyear}"/></li>
+    <li><c:out value="${fi.rating}"/> Rating</li>
+    <li>Length of film: <c:out value="${fi.length}"/></li>
+    <li><c:out value="${fi.specialfeatures}"/></li>
+    <li>Cast = <c:out value="${fi.cast}"/></li><br>
+    </c:forEach>
+    </ul>
+   
+  </c:when>
+  </c:choose> 
+  </form>
 </div>
 
 <hr>
+ <a href="JSPafterAddedFilm.jsp" role="button">Click here for NEW film you wish to add!</a>
 
- <form action="JSPafterAddedFilm.jsp" id="title">  
-<input type="submit" value="Click here for NEW film you wish to add!"><br>
-</form> 
 
 
 

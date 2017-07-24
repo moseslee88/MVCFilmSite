@@ -50,6 +50,18 @@ public class FilmController {
 		}
 		
 		
+		@RequestMapping(path = "getFilms.do",
+				method=RequestMethod.GET)
+		//public ModelAndView getFilmTitleByKeyword(@RequestParam(name = "filmkey") String filmkey) {
+		public ModelAndView getAllFilms() {
+			String viewName = "WEB-INF/views/home.jsp";
+			ModelAndView mv = new ModelAndView(viewName);
+			List<Film> title = dao.getAllFilms();
+			mv.addObject("filmTitlekey", title);  
+			return mv;
+		}
+		
+		
 		@RequestMapping(path = "postTitle.do", 
 				method=RequestMethod.POST)
 		public ModelAndView addFilmTitle(Film film,
@@ -67,7 +79,7 @@ public class FilmController {
             method=RequestMethod.GET)     
 public ModelAndView gotFilmandAddtoList(Film film) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("WEB-INF/views/JSPafterAddedFilm.jsp");
+		mv.setViewName("JSPafterAddedFilm.jsp");
 		mv.addObject("filmlist", dao.getAllFilms());
 		return mv;
 }
@@ -76,7 +88,7 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 			method=RequestMethod.POST)
 	public ModelAndView updateFilmTitle(Film film, RedirectAttributes redir) {
 		dao.updateFilm(film);
-		String viewName = "WEB-INF/views/JSPafterAddedFilm.jsp";
+		String viewName = "JSPafterAddedFilm.jsp";
 		ModelAndView mv = new ModelAndView(viewName);
 		System.out.println("film: " + film);
 		redir.addFlashAttribute("filmlist", dao.getAllFilms());

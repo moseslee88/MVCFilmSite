@@ -7,9 +7,9 @@ public interface FilmDao {
 	String getFilmTitleById(int id);  
 	List<Film> getFilmTitleByKeyword(String key);  
 	public void addFilm(Film film);
-	public boolean deleteFilm(Film film);
+	public int deleteFilm(int id);
 	public boolean updateFilm(Film film);
 	//List<String> getFilmTitleByKeyword(String key);  
 	//List<Film> getFilmTitleById(String newkey); 
-	public List<Film> getAllFilms();
+	List<Film> getAllFilms();
 }

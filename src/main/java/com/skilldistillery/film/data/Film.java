@@ -44,6 +44,19 @@ public class Film {
 		this.rating = rating;
 		this.specialfeatures = specialfeatures;
 	}
+	
+	//constructor for some parameters I use for my getAllFilms method in DAO
+	public Film(int id, String title, String description, int releaseyear, String rating,
+			int length,  String specialfeatures, List<Actor> cast) {
+		this.id=id;
+		this.title = title;
+		this.description = description;
+		this.releaseyear = releaseyear;
+		this.rating = rating;
+		this.length = length;
+		this.specialfeatures = specialfeatures;
+		this.cast=cast;
+	}
 
 	public int getId() {
 		return id;
