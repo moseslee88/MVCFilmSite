@@ -13,7 +13,7 @@
 <div id=deleted>
 
 
-STUFF was deleted here form database!!
+STUFF was deleted/Updated here form database!!
 
    <c:choose>
   <c:when test="${filmlist != null}">
@@ -33,20 +33,12 @@ STUFF was deleted here form database!!
     </ul>
     </c:when>
     </c:choose>
+    
 
 
-    <!--  <form action="getTitle.do" method="get">
-<input type="text" name="filmId">
-<input type="submit" value="Look Up Film by id">
+    <h5>The film you deleted was ... "${film}"</h5>
+    
 
-</form>
-
-
-<c:choose>  
-  <c:when test="${filmTitle != null}">
-    <h3>${filmTitle}</h3>
-  </c:when>
-</c:choose> -->
 
 </div>
 </body>

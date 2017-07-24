@@ -88,13 +88,15 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	
 	// deletes FILM object after clicking button
 	@RequestMapping(value = "FilmDeleted.do", method = RequestMethod.POST)
-	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id) {
+	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id, Film film) {
 		dao.getAllFilms();
 		dao.deleteFilm(id);
 		ModelAndView mv = new ModelAndView();
 	    System.out.println("film id deleted: " + id);
 		mv.setViewName("JSPafterdelete.jsp");
 		mv.addObject("filmlist", dao.getAllFilms());
+		mv.addObject("id", id);
+		mv.addObject("film", film);
 
 		return mv;
 	}
@@ -102,8 +104,9 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	// here I do the updating of film
 	@RequestMapping(path = "FilmUpdated.do", 
 			method=RequestMethod.POST)
-	public ModelAndView updateFilmTitle(Film film, RedirectAttributes redir) {
+	public ModelAndView updateFilmTitle(@RequestParam(name = "filmId") int id, Film film) {
 		dao.updateFilm(film);
+		dao.getAllFilms();
 		ModelAndView mv = new ModelAndView();
 		System.out.println("film: " + film);
 		mv.setViewName("JSPafterdelete.jsp");

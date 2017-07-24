@@ -96,6 +96,8 @@ Film Added:<br>
 							<input type="checkbox" name="specialfeatures" VALUE="Behind The Scenes" CHECKED>Behind the Scenes
 							<br>
                              <input type="submit" value="UpdateFilm" class="submit"/><br><br>
+                                     
+                                     
                                      </form>
 						                     <form action="FilmDeleted.do" method="POST">
 						                     <input type="hidden" name="filmId" value="${fil.id }">
