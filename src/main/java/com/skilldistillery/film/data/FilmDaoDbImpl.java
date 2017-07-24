@@ -16,7 +16,7 @@ public class FilmDaoDbImpl implements FilmDao {
 	private String user = "student";
 	private String pass = "student";
 	private List<Film> films = new ArrayList<>();
-	private Film film;
+	private Film film; 
 
 	@Override
 	public String getFilmTitleById(int id) {
