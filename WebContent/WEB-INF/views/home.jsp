@@ -54,6 +54,9 @@
     <li><c:out value="${fil.description}"/></li>
     <li><c:out value="${fil.specialfeatures}"/></li>
     <li>Cast = <c:out value="${fil.cast}"/></li><br>
+    
+<!--  -->
+<!--  -->
     </c:forEach>
     </ul>
    
@@ -66,35 +69,17 @@
   
 </c:if>
   </c:otherwise>
+
 </c:choose>
 </form>
 
 <hr> 
 
+<!--  <a href="AllFilms.jsp" role="button">View a list of ALL the films!</a>    -->
 <form action="getFilms.do" method="get">
 <input type="submit" value="Look at all Films">
-
-
-
-<c:set var="list" value="${filmTitlelist }" />
-<c:choose>  
-   <c:when test="${! empty filmTitlelist  }">  
-  <ul>
-  <c:forEach var="fi" items="${filmTitlekey }">
-    <li><c:out value="${fi.id}"/></li>
-    <li><c:out value="${fi.title}"/></li>
-    <li>Brief Description: <c:out value="${fi.description}"/></li>
-    <li>Year: <c:out value="${fi.releaseyear}"/></li>
-    <li><c:out value="${fi.rating}"/> Rating</li>
-    <li>Length of film: <c:out value="${fi.length}"/></li>
-    <li><c:out value="${fi.specialfeatures}"/></li>
-    <li>Cast = <c:out value="${fi.cast}"/></li><br>
-    </c:forEach>
-    </ul>
-   
-  </c:when>
-  </c:choose> 
-  </form>
+</form>
+  
 </div>
 
 <hr>

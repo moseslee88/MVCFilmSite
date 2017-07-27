@@ -54,7 +54,7 @@ public class FilmController {
 				method=RequestMethod.GET)
 		//public ModelAndView getFilmTitleByKeyword(@RequestParam(name = "filmkey") String filmkey) {
 		public ModelAndView getAllFilms() {
-			String viewName = "WEB-INF/views/home.jsp";
+			String viewName = "AllFilms.jsp";
 			ModelAndView mv = new ModelAndView(viewName);
 			List<Film> title = dao.getAllFilms();
 			mv.addObject("filmTitlekey", title);  
@@ -88,7 +88,7 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 	
 	// deletes FILM object after clicking button
 	@RequestMapping(value = "FilmDeleted.do", method = RequestMethod.POST)
-	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id, Film film) {
+	public ModelAndView deleteFilm(@RequestParam(name = "filmId") int id) {
 		dao.getAllFilms();
 		dao.deleteFilm(id);
 		ModelAndView mv = new ModelAndView();
@@ -96,7 +96,7 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 		mv.setViewName("JSPafterdelete.jsp");
 		mv.addObject("filmlist", dao.getAllFilms());
 		mv.addObject("id", id);
-		mv.addObject("film", film);
+//		mv.addObject("film", film);
 
 		return mv;
 	}
@@ -113,7 +113,6 @@ public ModelAndView gotFilmandAddtoList(Film film) {
 		System.out.println("film: " + film);
 		mv.setViewName("JSPafterdelete.jsp");
 		mv.addObject("film", film);
-		mv.addObject("filmId", id);
 		mv.addObject("filmlist", dao.getAllFilms());
 		return mv;
 	}

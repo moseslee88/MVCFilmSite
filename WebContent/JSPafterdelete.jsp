@@ -13,7 +13,7 @@
 <div id=deleted>
 
 
-STUFF was deleted/Updated here form database!!
+STUFF was deleted/Updated here from database!!
 
    <c:choose>
   <c:when test="${filmlist != null}">
@@ -21,14 +21,14 @@ STUFF was deleted/Updated here form database!!
   <c:forEach var="fil" items="${filmlist }">
     <li>FilmId = <c:out value="${fil.id}"/></li>
     <li><c:out value="${fil.title}"/></li>
-    <li><c:out value="${fil.description}"/></li>
-    <li><c:out value="${fil.releaseyear}"/></li>
+    <li>Description: <c:out value="${fil.description}"/></li>
+    <li>Year: <c:out value="${fil.releaseyear}"/></li>
     <li><c:out value="${fil.rentalduration}"/></li>
     <li><c:out value="${fil.rentalrate}"/></li>
-    <li><c:out value="${fil.length}"/></li>
+    <li>Length of film: <c:out value="${fil.length}"/></li>
     <li><c:out value="${fil.replacementcost}"/></li>
-    <li><c:out value="${fil.rating}"/></li>
-    <li><c:out value="${fil.specialfeatures}"/></li><br><br>
+    <li><c:out value="${fil.rating}"/> Rating</li>
+    <li>Spec. Features: <c:out value="${fil.specialfeatures}"/></li><br><br>
     </c:forEach>
     </ul>
     </c:when>
@@ -36,8 +36,8 @@ STUFF was deleted/Updated here form database!!
     
 
 
-    <h5>The film you updated was ... "${film}"</h5>
     
+ <br><br><h5>The film you updated was ... "${film}"</h5>
 
 
 </div>

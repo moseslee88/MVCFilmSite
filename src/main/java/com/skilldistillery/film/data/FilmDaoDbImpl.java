@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FilmDaoDbImpl implements FilmDao {
+public class FilmDaoDbImpl implements FilmDao {  
 	private static String url = "jdbc:mysql://localhost:3306/sdvid";
 	private String user = "student";
 	private String pass = "student";
@@ -153,7 +153,7 @@ public class FilmDaoDbImpl implements FilmDao {
 			stmt.setDouble(7, film.getReplacementcost());
 			stmt.setString(8, film.getRating());
 			stmt.setString(9, film.getSpecialfeatures());
-			stmt.setInt(10, 1);
+			stmt.setInt(10, 1);  //HARD-coded language id to 1. English
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				ResultSet keys = stmt.getGeneratedKeys();
@@ -211,73 +211,7 @@ public class FilmDaoDbImpl implements FilmDao {
         return id;
 		
 	}
-       /*** Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, user, pass);
-            conn.setAutoCommit(false); // START TRANSACTION
-            String sql4 = "select id from inventory_item where film_id = ?";
-            //String sql4 = "DELETE FROM film WHERE id=?";
-            PreparedStatement stmt4 = conn.prepareStatement(sql4, Statement.RETURN_GENERATED_KEYS);
-            stmt4.setInt(1, id);
-            int updateCount=stmt4.executeUpdate();
-            stmt4.executeQuery();
-            ResultSet keys = stmt4.executeQuery();
-            while (keys.next()) {
-                System.out.println("in first while");
-                String sql5 = "select id from rental where inventory_id = ?";
-                PreparedStatement stmt5 = conn.prepareStatement(sql5, Statement.RETURN_GENERATED_KEYS);
-                stmt5.setInt(1, keys.getInt(1));
-                stmt5.executeQuery();
-                ResultSet keys2 = stmt5.getGeneratedKeys();
-                while (keys2.next()) {
-                    String sql6 = "Delete from payment where rental_id = ?";
-                    PreparedStatement stmt6 = conn.prepareStatement(sql6, Statement.RETURN_GENERATED_KEYS);
-                    stmt6.setInt(1, keys2.getInt(1));
-                    stmt6.execute();
-                }
-                keys2.close();
-                String sql7 = "delete from rental where inventory_id = ?";
-                System.out.println(sql7 + " " + keys.getInt(1));
-                PreparedStatement stmt7 = conn.prepareStatement(sql7, Statement.RETURN_GENERATED_KEYS);
-                stmt7.setInt(1, keys.getInt(1));
-                stmt7.execute();
-            }
-            keys.close();
-            
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"); //TEST to see if reached code
-            String sql3 = "Delete From inventory_item WHERE  film_id = ?";
-            PreparedStatement stmt3 = conn.prepareStatement(sql3, Statement.RETURN_GENERATED_KEYS);
-            stmt3.setInt(1, id);
-            stmt3.execute();
-            String sql8 = "Delete From film_category WHERE  film_id = ?";
-            PreparedStatement stmt8 = conn.prepareStatement(sql8, Statement.RETURN_GENERATED_KEYS);
-            stmt8.setInt(1, id);
-            stmt8.execute();
-            String sql2 = "Delete From Film_actor WHERE  film_id = ?";
-            PreparedStatement stmt2 = conn.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
-            stmt2.setInt(1, id);
-            stmt2.execute();
-            String sql = "Delete From Film WHERE  id = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, id);
-            stmt.execute();
-
-            stmt.close();
-            conn.commit(); // COMMIT TRANSACTION
-            conn.close();
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException sqle2) {
-                    System.err.println("Error trying to rollback");
-                }
-            }
-            throw new RuntimeException("Error could not delete film with id " + id);
-        }
-        return id;
-    }   ***/
+      
 
 	@Override
 	public boolean updateFilm(Film film) {
@@ -297,8 +231,8 @@ public class FilmDaoDbImpl implements FilmDao {
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getReleaseyear());
 			stmt.setInt(4, film.getRentalduration());
-		    stmt.setDouble(6, film.getRentalrate()); //stmt.setDouble(5, 8.99);  TEST to see if film line updates and hardcode film's rental_rate to 8.99
-			stmt.setInt(6, film.getLength());
+		    stmt.setDouble(5, film.getRentalrate()); //stmt.setDouble(5, 8.99);  TEST to see if film line updates and hardcode film's rental_rate to 8.99
+			stmt.setInt(6, film.getLength());    
 			stmt.setDouble(7, film.getReplacementcost());
 			stmt.setString(8, film.getRating());
 			stmt.setString(9, film.getSpecialfeatures());
@@ -359,6 +293,7 @@ public class FilmDaoDbImpl implements FilmDao {
 
 	public List<Film> getAllFilms() {
 
+		List<Film> filmList = new ArrayList<>();
 		List<Actor> cast = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
@@ -377,7 +312,7 @@ public class FilmDaoDbImpl implements FilmDao {
 				String specialfeatures = rs.getString(7);
 				cast = getActorsByID(id);
 				Film film = new Film(id, title, description, releaseyear, rating, length, specialfeatures, cast);
-				films.add(film);
+				filmList.add(film);
 			}
 			rs.close();
 			stmt.close();
@@ -385,9 +320,9 @@ public class FilmDaoDbImpl implements FilmDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return films;
+		return filmList;
 	}
-	
+    	
 
 }
 
