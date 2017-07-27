@@ -12,5 +12,5 @@
 <bean id="dao" class="com.skilldistillery.film.data.FilmDaoDbImpl"></bean>
 
 
- <mvc:annotation-driven></mvc:annotation-driven> 
+ <mvc:annotation-driven/> 
 </beans>

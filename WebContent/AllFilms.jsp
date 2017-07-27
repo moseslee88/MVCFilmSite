@@ -24,11 +24,16 @@
 						<li><c:out value="${fi.title}" /></li>
 						<li>Brief Description: <c:out value="${fi.description}" /></li>
 						<li>Year: <c:out value="${fi.releaseyear}" /></li>
+						<li>Rental duration: <c:out value="${fi.rentalduration}"/></li>
+                         <li>Rental Cost: <c:out value="${fi.rentalrate}"/></li>
 						<li><c:out value="${fi.rating}" /> Rating</li>
-						<li>Length of film: <c:out value="${fi.length}" /></li>
+						<li>Length of film: <c:out value="${fi.length}" /> minutes</li>
+						<li>Replacement Cost of film: <c:out value="${fi.replacementcost}"/></li>
 						<li><c:out value="${fi.specialfeatures}" /></li>
 						<li>Cast = <c:out value="${fi.cast}" /></li>
 						<br>
+						
+						
 
 						<form action="FilmUpdated.do" method="POST">
 							Film ID <input type="hidden" name="id" value="${fi.id}">${fi.id}<br>
@@ -45,15 +50,10 @@
 								<option>5</option>
 								<option>6</option>
 								<option>7</option>
-							</select>${fi.rentalduration } <br> <input type="text"
-								name="rentalrate"
-								value="${fi.rentalrate}"
-								style="width: 28%">${fi.rentalrate}<br> <input
-								type="number" name="length" min="1" max="190"
-								value="${fi.length}" style="width: 30%">${fi.length}<br>
-							<input type="number" name="replacementcost" min="0.00"
-								max="100.00" value="${fi.replacementcost}"
-								style="width: 30%">${fi.replacementcost}<br>
+							</select>${fi.rentalduration } <br> 
+						Rental Rate:	<input type="text" name="rentalrate" value="${fi.rentalrate}" style="width: 28%">${fi.rentalrate}<br> 
+						Film Length:	<input type="number" name="length" min="1" max="190" value="${fi.length}" style="width: 30%">${fi.length}<br>
+						Replacement Cost:	<input type="number" name="replacementcost" min="0.00" max="100.00" value="${fi.replacementcost}" style="width: 30%">${fi.replacementcost}<br>
 							Rating: <select name="rating" id="title" value="${fi.rating }">
 								<option>G</option>
 								<option>PG</option>

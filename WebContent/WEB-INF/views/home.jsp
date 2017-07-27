@@ -51,8 +51,8 @@
     <li>Year: <c:out value="${fil.releaseyear}"/></li>
     <li><c:out value="${fil.length}"/> min. long</li>
     <li><c:out value="${fil.rating}"/> rating</li>
-    <li><c:out value="${fil.description}"/></li>
-    <li><c:out value="${fil.specialfeatures}"/></li>
+    <li>Brief Description: <c:out value="${fil.description}"/></li>
+    <li>Special features: <c:out value="${fil.specialfeatures}"/></li>
     <li>Cast = <c:out value="${fil.cast}"/></li><br>
     
 <!--  -->

@@ -23,7 +23,7 @@ public class FilmController {
 	@Autowired
 	private FilmDao dao;
 	
-	@RequestMapping
+	@RequestMapping(path="home.do")
 	public ModelAndView home() {
 		  return new ModelAndView("WEB-INF/views/home.jsp");
 		}

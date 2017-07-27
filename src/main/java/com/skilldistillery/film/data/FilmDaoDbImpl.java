@@ -69,7 +69,7 @@ public class FilmDaoDbImpl implements FilmDao {
 			stmt.setString(1, "%" + key + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				int filmid = rs.getInt(1);
+				int id = rs.getInt(1);
 				title = rs.getString(2);
 				description = rs.getString(3);
 				releaseyear = rs.getInt(4);
@@ -77,8 +77,8 @@ public class FilmDaoDbImpl implements FilmDao {
 				length = rs.getInt(6);
 				specialfeatures = rs.getString(7);
 				System.out.println(rs.getInt(1));
-				cast = getActorsByID(filmid);
-				Film film = new Film(filmid, title, description, releaseyear, rating, length, specialfeatures, cast);
+				cast = getActorsByID(id);
+				Film film = new Film(id, title, description, releaseyear, rating, length, specialfeatures, cast);
 				//Film film = new Film(title, rating, description, length, cast);
 				films.add(film);
 			}
@@ -211,6 +211,8 @@ public class FilmDaoDbImpl implements FilmDao {
         return id;
 		
 	}
+	
+
       
 
 	@Override
@@ -297,7 +299,7 @@ public class FilmDaoDbImpl implements FilmDao {
 		List<Actor> cast = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT id, title, description, release_year, rating, length, special_features FROM film ";
+			String sql = "SELECT id, title, description, release_year, rental_duration, rental_rate, rating, length, replacement_cost, special_features FROM film ";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			//stmt.setString(1, "%" + key + "%");
 			ResultSet rs = stmt.executeQuery();
@@ -306,12 +308,15 @@ public class FilmDaoDbImpl implements FilmDao {
 				String title = rs.getString(2);
 				String description = rs.getString(3);
 				int releaseyear = rs.getInt(4);
-				String rating = rs.getString(5);
-				int length = rs.getInt(6);
-				System.out.println(rs.getInt(6));
-				String specialfeatures = rs.getString(7);
+				int rentalduration = rs.getInt(5);
+				Double rentalrate = rs.getDouble(6);
+				String rating = rs.getString(7);
+				int length = rs.getInt(8);
+				Double replacementcost = rs.getDouble(9);
+				System.out.println(rs.getInt(8));
+				String specialfeatures = rs.getString(10);
 				cast = getActorsByID(id);
-				Film film = new Film(id, title, description, releaseyear, rating, length, specialfeatures, cast);
+				Film film = new Film(id, title, description, releaseyear, rentalduration, rentalrate, rating, length, replacementcost, specialfeatures, cast );
 				filmList.add(film);
 			}
 			rs.close();

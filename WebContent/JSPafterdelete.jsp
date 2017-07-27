@@ -23,10 +23,10 @@ STUFF was deleted/Updated here from database!!
     <li><c:out value="${fil.title}"/></li>
     <li>Description: <c:out value="${fil.description}"/></li>
     <li>Year: <c:out value="${fil.releaseyear}"/></li>
-    <li><c:out value="${fil.rentalduration}"/></li>
-    <li><c:out value="${fil.rentalrate}"/></li>
+    <li>Rental Duration: <c:out value="${fil.rentalduration}"/></li>
+    <li>Rental Rate: <c:out value="${fil.rentalrate}"/></li>
     <li>Length of film: <c:out value="${fil.length}"/></li>
-    <li><c:out value="${fil.replacementcost}"/></li>
+    <li>Replacement cost: <c:out value="${fil.replacementcost}"/></li>
     <li><c:out value="${fil.rating}"/> Rating</li>
     <li>Spec. Features: <c:out value="${fil.specialfeatures}"/></li><br><br>
     </c:forEach>
